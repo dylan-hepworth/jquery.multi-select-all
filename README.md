@@ -1,5 +1,7 @@
 # jquery-multi-select-all
 
+This is forked from `mySociety's` `jquery.multi-select.js` plugin ([ttps://github.com/mysociety/jquery-multi-select](ttps://github.com/mysociety/jquery-multi-select)). This fork enhances this plugin by adding the "allOptionValue" and "onClose" options.
+
 Converts `<select multiple>` elements into dropdown menus with a checkbox for each `<option>`.
 
 ## Use this plugin
@@ -54,6 +56,7 @@ Options related to labels and (select) options:
 | `allText` | `undefined` | Shown in the button when all options have been selected. |
 | `presets` | `undefined` | An array of preset option groups, see the demo for an example. |
 | `allOptionValue` | `undefined` | Set this to the string value of your "All" option. |
+| `onClose` | `undefined` | Assign a callback function when the dropdown selector is closed. |
 
 Options related to positioning:
 
@@ -66,4 +69,4 @@ Options related to positioning:
 
 ## See a demo
 
-Run `make demo`, or open `index.html` in your web browser.
+Open `index.html` in your web browser.

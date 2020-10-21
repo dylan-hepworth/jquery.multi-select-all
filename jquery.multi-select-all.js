@@ -3,9 +3,9 @@
  * Original work by mySociety
  * https://github.com/mysociety/jquery-multi-select
  * 
- * This logic was forked in order to be able to add an "All" option that can be passed when instantiated.
- * If your multi-select element has an option to select all, you can set the "allOptionValue" to the string 
- * value of this option. 
+ * This logic was forked in order to be able to add an "All" option that can be passed when instantiated as well as an 
+ * "onClose" callback function for whne the selection's menu listing is closed. If your multi-select element has an option 
+ * to select all, you can set the "allOptionValue" to the string value of this option. 
  * 
  * When selecting this "All" option, all other options will be deselected. Upon selecting another option, the "All"
  * option will be deselected.
@@ -13,7 +13,10 @@
     For example:
 
     $('select').multiSelect({
-        allOptionValue: "All"
+        allOptionValue: "All",
+        onClose: function() {
+            alert("Menu closed!")
+        }
     });
  */
 
@@ -41,7 +44,8 @@
             'positionMenuWithin': undefined,
             'viewportBottomGutter': 20,
             'menuMinHeight': 200,
-            'allOptionValue': undefined
+            'allOptionValue': undefined,
+            'onClose': undefined
     };
 
     /**
@@ -103,6 +107,7 @@
             this.$container = $(this.settings['containerHTML']);
             this.$element.data('multi-select-container', this.$container);
             this.$container.insertAfter(this.$element);
+            this.$menuItems = $(this.settings['menuItemsHTML']);
         },
     
         constructButton: function() {
@@ -233,8 +238,7 @@
     
         constructMenuItems: function() {
             var _this = this;
-    
-            this.$menuItems = $(this.settings['menuItemsHTML']);
+
             this.$menu.append(this.$menuItems);
     
             this.$element.on('change.multiselect', function(e, internal) {
@@ -474,6 +478,12 @@
         },
     
         menuHide: function() {
+            // When closing the menu, check to see if a callback function for onClose has been set and call it
+            if ( this.$container.hasClass(this.settings['activeClass']) ) {
+                if (typeof this.settings['onClose'] != "undefined") {
+                    this.settings['onClose']();
+                }
+            }
             this.$container.removeClass(this.settings['activeClass']);
             this.$container.removeClass(this.settings['positionedMenuClass']);
             this.$menu.css('width', 'auto');
