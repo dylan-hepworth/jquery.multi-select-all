@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+    <select multiple>
+        <option value="0">All</option>
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
+        <option value="4">Option 4</option>
+    </select>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.x-git.min.js"></script>
+    <script type="text/javascript" src="./jquery.multi-select-all.min.js"></script>
+    <script>
+        $('select').multiSelect({
+            allOptionValue: "All"
+        });
+    </script>
+</body>
+</html>
