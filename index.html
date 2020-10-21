@@ -18,7 +18,10 @@
     <script type="text/javascript" src="./jquery.multi-select-all.min.js"></script>
     <script>
         $('select').multiSelect({
-            allOptionValue: "All"
+            allOptionValue: "All",
+            onClose: function() {
+                alert("Menu closed!")
+            }
         });
     </script>
 </body>
