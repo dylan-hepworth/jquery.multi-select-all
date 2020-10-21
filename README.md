@@ -1,6 +1,6 @@
 # jquery-multi-select-all
 
-This is forked from `mySociety's` `jquery.multi-select.js` plugin ([ttps://github.com/mysociety/jquery-multi-select](ttps://github.com/mysociety/jquery-multi-select)). This fork enhances this plugin by adding the "allOptionValue" and "onClose" options.
+This is forked from `mySociety's` `jquery.multi-select.js` plugin ([https://github.com/mysociety/jquery-multi-select](https://github.com/mysociety/jquery-multi-select)). This fork enhances this plugin by adding the "allOptionValue" and "onClose" options.
 
 Converts `<select multiple>` elements into dropdown menus with a checkbox for each `<option>`.
 
