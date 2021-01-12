@@ -46,7 +46,8 @@
             'menuMinHeight': 200,
             'allOptionValue': undefined,
             'onClose': undefined
-    };
+    },
+    dataAttrName = "multiselect_" + Math.floor(Math.random() * 10001); // Used to identify the current instance in case we need to reload.
 
     /**
      * @constructor
@@ -105,6 +106,10 @@
     
         constructContainer: function() {
             this.$container = $(this.settings['containerHTML']);
+            
+            // Set the attribute which will contain the instance name for reloading
+            this.$container.attr("data-instance", dataAttrName)
+            
             this.$element.data('multi-select-container', this.$container);
             this.$container.insertAfter(this.$element);
             this.$menuItems = $(this.settings['menuItemsHTML']);
@@ -499,10 +504,24 @@
     });
 
     $.fn[pluginName] = function(options) {
-        return this.each(function() {
+        var _this = this;
+        this.each(function() {
             if ( !$.data(this, "plugin_" + pluginName) ) {
                 $.data(this, "plugin_" + pluginName, new MultiSelect(this, options) );
             }
         });
-    };
+
+        return {
+            reload: function() {
+                // Find the existing multiselect and remove it 
+                $("[data-instance = " + dataAttrName + "]").remove();
+
+                // Update the instance name before creating a new instance.
+                dataAttrName = "multiselect_" + Math.floor(Math.random() * 10001);
+
+                // Create a new instance of the plugin
+                $.data(_this, "plugin_" + pluginName, new MultiSelect(_this, options) );
+            }
+        }
+    };    
 })(jQuery);

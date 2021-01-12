@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-    <select multiple>
+    <select id="select_list" multiple>
         <option value="0">All</option>
         <option value="1">Option 1</option>
         <option value="2">Option 2</option>
@@ -14,15 +14,32 @@
         <option value="4">Option 4</option>
     </select>
 
+    <br />
+    <br />
+    <button id="reload_btn">Click It!</button>
+
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.x-git.min.js"></script>
     <script type="text/javascript" src="./jquery.multi-select-all.min.js"></script>
     <script>
-        $('select').multiSelect({
+        var mySelect = $('select').multiSelect({
             allOptionValue: "All",
             onClose: function() {
                 alert("Menu closed!")
             }
         });
-    </script>
+
+        // Testing the reload functionality. Remove all entries in the select list and add some dummy data.
+        $("#reload_btn").click(function() {
+            $("#select_list").empty()
+                .append(new Option("option text", "value"))
+                .append(new Option("ABCD", "value2"))
+                .append(new Option("text", "value3"))
+                .append(new Option("option", "value4"));
+                
+            // Reload the list with the new values
+            mySelect.reload();
+        });
+
+        </script>
 </body>
 </html>

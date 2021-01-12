@@ -67,6 +67,21 @@ Options related to positioning:
 | `viewportBottomGutter` | `20` | The plugin will attempt to keep this distance, in pixels, clear between the bottom of the menu and the bottom of the viewport, by setting a fixed `height` style if the menu would otherwise approach this distance from the _bottom edge_ of the viewport. |
 | `menuMinHeight` | `200` | The minimum height, in pixels, that the menu will be reduced to before the `viewportBottomGutter` option is ignored and the menu is allowed to extend beyond the _bottom edge_ of the viewport. |
 
+## Reloading the Plugin
+In some cases you may run into a scenario where you want to reload the list. For example, it's possible that you need to add new options to the select box. If you were to just add new options to the DOM, they would not show up in the multi-select. Fortunately you can instantiate a definition of the multi-select and call its reload method. For example:
+
+    var myMultiSelect = $('#select_list').multiSelect();
+
+    // Simulate removing all current values and adding new ones
+    $("#select_list").empty()
+        .append(new Option("New Option 1", "value1"))
+        .append(new Option("New Option 2", "value2"))
+        .append(new Option("New Option 3", "value3"))
+        .append(new Option("New Option 4", "value4"));
+        
+    // Reload the multi-select with the updated options
+    myMultiSelect.reload();
+
 ## See a demo
 
 Open `index.html` in your web browser.
