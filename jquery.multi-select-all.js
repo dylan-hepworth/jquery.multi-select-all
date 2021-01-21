@@ -47,7 +47,9 @@
             'allOptionValue': undefined,
             'onClose': undefined
     },
-    dataAttrName = "multiselect_" + Math.floor(Math.random() * 10001); // Used to identify the current instance in case we need to reload.
+    dataAttrName = "multiselect_" + Math.floor(Math.random() * 10001), // Used to identify the current instance in case we need to reload.
+    itemsLoadState = undefined,
+    itemsCloseState = undefined;
 
     /**
      * @constructor
@@ -256,7 +258,28 @@
     
             this.updateMenuItems();
         },
-    
+
+        updateItemsState: function(onOpen) {
+            var _this = this;
+
+            var elementState = [];
+
+            this.$element.children('optgroup,option').each(function(index, element) {
+                var $item;
+                if (element.nodeName === 'OPTION') {
+                    $item = _this.constructMenuItem($(element), index);
+
+                    elementState.push($item[0].childNodes[0].checked);                    
+                }
+            });
+
+            if (onOpen) {
+                _this.itemsLoadState = elementState;
+            } else {
+                _this.itemsCloseState = elementState
+            }
+        },
+
         updateMenuItems: function() {
             var _this = this;
             this.$menuItems.empty();
@@ -450,6 +473,9 @@
         },
     
         menuShow: function() {
+            // Get the initial items' states to compare when closing
+            this.updateItemsState(true);
+
             $('html').trigger('click.multiselect'); // Close any other open menus
             this.$container.addClass(this.settings['activeClass']);
     
@@ -485,8 +511,18 @@
         menuHide: function() {
             // When closing the menu, check to see if a callback function for onClose has been set and call it
             if ( this.$container.hasClass(this.settings['activeClass']) ) {
-                if (typeof this.settings['onClose'] != "undefined") {
-                    this.settings['onClose']();
+
+                // Check to see if the items' states have been changed
+                this.updateItemsState(false);
+
+                // Check diff on initial state and current state
+                var hasStateChanged = (this.itemsLoadState.toString() !== this.itemsCloseState.toString());
+
+                // If the state has changed, call the 'onClose' callback
+                if (hasStateChanged) {
+                    if (typeof this.settings['onClose'] != "undefined") {
+                        this.settings['onClose']();
+                    }
                 }
             }
             this.$container.removeClass(this.settings['activeClass']);
